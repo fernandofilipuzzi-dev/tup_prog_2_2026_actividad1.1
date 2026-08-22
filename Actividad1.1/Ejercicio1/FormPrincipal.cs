@@ -1,43 +1,44 @@
-﻿using Actividad1.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿
+using Ejercicio1.Models;
 
-namespace Actividad1
+namespace Ejercicio1;
+
+public partial class FormPrincipal : Form
 {
-    public partial class FormPrincipal : Form
+    Cocina cocinaDeAna;
+
+    public FormPrincipal()
     {
-        public FormPrincipal()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        Cocina cocinaDeAna;
-        private void btnClienteCrearCocina_Click(object sender, EventArgs e)
-        {
-            Alacena alacena = new Alacena();//1
-            Amasador amasador = new Amasador();//2
-            Cocinera cocineraACargo = new Cocinera("Ana");//3
 
-            cocinaDeAna = new Cocina(alacena, amasador, cocineraACargo);//4 , donde 5,6,y 7 se desarrollan dentro del constructor de Cocina
-        }
+    private void btnClienteCrearCocina_Click(object sender, EventArgs e)
+    {
+        Alacena alacena = new Alacena();//1
+        Amasador amasador = new Amasador();//2
+        Cocinera cocineraACargo = new Cocinera("Ana");//3
 
-        private void btnClienteReponer_Click(object sender, EventArgs e)
+        cocinaDeAna = new Cocina(alacena, amasador, cocineraACargo);//4 , donde 5,6,y 7 se desarrollan dentro del constructor de Cocina
+    }
+
+    private void btnClienteReponer_Click(object sender, EventArgs e)
+    {
+        if (cocinaDeAna != null)
         {
             Alacena a = cocinaDeAna.Alacena;//1 y 2
             a.ReponerHarina(50);//3
             a.ReponerFruta(10);//4
         }
+        else
+        {
+            MessageBox.Show("Primero debe crear la cocina");
+        }
+    }
 
-
-
-        private void btnClienteCocina_Click(object sender, EventArgs e)
+    private void btnClienteCocina_Click(object sender, EventArgs e)
+    {
+        if (cocinaDeAna != null)
         {
             //Le pedimos a la cocina su alacena
             Alacena a = cocinaDeAna.Alacena;//1
@@ -74,11 +75,14 @@ namespace Actividad1
 
             listBox1.Items.Add("Misterio - Ana, reportate?");
             listBox1.Items.Add($"Ana - {ana.ContestarEnQueEtapaEsta()}");
-
         }
-        private void button3_Click(object sender, EventArgs e)
+        else
         {
-            Close();
+            MessageBox.Show("Primero debe crear la cocina");
         }
+    }
+    private void button3_Click(object sender, EventArgs e)
+    {
+        Close();
     }
 }
